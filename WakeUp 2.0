@@ -1,0 +1,13 @@
+#Persistent
+
+SetTimer, Move,% 595000 	 ; approximately every 9.5 minutes
+Move:
+DllCall("GetCursorPos", "uint64*", V:=0)
+x := V << 32 >> 32, y := V >> 32
+DllCall("SetCursorPos", "int", x+1, "int", y)
+Sleep, 100
+DllCall("SetCursorPos", "int", x, "int", y)
+
+Soundbeep 670, 175   ; Script actived
+
+Return
