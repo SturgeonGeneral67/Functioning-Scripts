@@ -1,0 +1,23 @@
+^!I::  				 ; Lock window
+winLock(hWnd := WinExist("A")) 	 ; Last active window.
+Soundbeep 670, 175
+Return
+
+^!O::  				 ; Unlock window
+winRevert(hWnd)
+Soundbeep 670, 175
+Return
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶   
+
+winLock(hWnd) { 
+nCnt := DllCall("GetMenuItemCount", "Int", sysMenu := hSysMenu(hWnd, False))
+DllCall("RemoveMenu", "Int", sysMenu, "UInt", nCnt - 6, "UInt", 0x400), DllCall("DrawMenuBar", "Int", hWnd)
+}
+
+hSysMenu(hWnd, revert) {
+Return DllCall("GetSystemMenu", "UInt", hWnd, "UInt", revert)
+}
+
+winRevert(hWnd) {
+DllCall("DrawMenuBar", "UInt", hSysMenu(hWnd, True))
+}
