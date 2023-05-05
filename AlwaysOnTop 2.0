@@ -1,0 +1,52 @@
+^+A:: 		 ; (Ctrl + Shift + A)
+Winset, AlwaysOnTop, Toggle, A
+WinGet, ExStyle, ExStyle, A
+if (ExStyle & 0x8) {
+guiW := 175
+
+Gui, 
+    +AlwaysOnTop 
+    -DPIScale 
+    +Disabled 
+    -SysMenu 
+    +Owner 
+Gui, Color, 000000
+Gui, Font,, Arial
+Gui, Font, s8 W200 Q5  			  ; Font size, weight (light), quality
+    Gui, Add, Text, Center cc08FF00, ꜛ   ꜛ  AlwaysOnTop is Active  ꜛ   ꜛ	  ; Text and text color. (Tab is recognized)
+Gui, 
+   -Caption
+Gui, Color, c000000
+    Gui, Menu
+WinGetPos x, y, w,, A
+    Gui Show, % "NoActivate x" x + w - guiW - 10 " y" y + 15 " w" guiW 
+Sleep 500 	 ; 1/2 second
+    Gui, Destroy 	 ; Closes Popup window after sleep time.
+Return
+
+}
+else
+{  
+
+guiW := 175
+
+Gui, 
+    +AlwaysOnTop 
+    -DPIScale 
+    +Disabled 
+    -SysMenu 
+    +Owner 
+Gui, Color, 000000
+Gui, Font,, Arial
+Gui, Font, s8 W200 Q5  			  ; Font size, weight (light), quality
+    Gui, Add, Text, Center cE60012, ꜜ  AlwaysOnTop is Disabled  ꜜ	  ; Text and text color. (Tab is recognized)
+Gui, 
+    -Caption
+Gui, Color, c000000
+    Gui, Menu, 
+WinGetPos x, y, w,, A
+    Gui Show, % "NoActivate x" x + w - guiW - 10 " y" y + 15 " w" guiW 
+    Gui, Show, , Window Header Text, NoActivate, 		 ; NoActivate avoids deactivating the currently active window.
+Sleep 500 	 ; 1/2 second
+    Gui, Destroy ; Closes Popup window after sleep time.
+Return
