@@ -1,0 +1,45 @@
+; CALC CONTROL : Opens and/or positions already opened Calculator as always on top in lower Right corner of monitor above taskbar clock, providing hotkey toggle control for click-through transparency.
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶ ̶  ̶  ̶  ̶  
+
+If (A_OSVersion ~= "WIN") 
+     exe := app := "win32calc.exe"
+Else exe := "ApplicationFrameHost.exe", app := "calc.exe"
+
+^F3:: 		 ; (Ctrl+F3)
+If !WinExist(winTitle := "Calculator ahk_exe " exe) 
+{
+ Run, %app%
+ WinWait, %winTitle%
+}
+;  ̶  ̶  ̶  ̶  	  ; Positioning Section
+WinGetPos X, Y, Width, Height, A
+MaxX := A_ScreenWidth - Width - 10 	 ; This will put the Gui to the right of the monitor...adjust the "10" value as needed.
+MaxY := A_ScreenHeight - Height - 55 	 ; This will put the Gui above the taskbar...adjust the "35" value as needed.
+WinMove A, ,%MaxX%, %MaxY% 	 ; Use the window found by WinWait.
+
+;  ̶  ̶  ̶  ̶  	  ; Click-through transparency Section 
+FallThrough = 1
+WinSet, ExStyle, +0x20, % WinTitle ; 0x20 = WS_EX_CLICKTHROUGH
+; WinSet, Transparent, 100, % WinTitle 	 ; REMOVE semi-colon to start calculator as semi-transparent click-throuable.
+WinSet, AlwaysOnTop, On, % WinTitle
+WinActivate
+Return
+
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  
+
+^F4:: 		 ; (Ctrl+F4)
+if FallThrough = 0
+{
+	FallThrough = 1
+	WinSet, ExStyle, -0x20, % WinTitle
+	WinSet, Transparent, 255, % WinTitle 	 ; Solid Non Click-through.
+	WinSet, AlwaysOnTop, Off, % WinTitle
+}
+else
+{
+	FallThrough = 0
+	WinSet, ExStyle, +0x20, % WinTitle
+	WinSet, Transparent, 130, % WinTitle 	 ; Click-through Transparency.
+	WinSet, AlwaysOnTop, On, % WinTitle
+}
+Return
