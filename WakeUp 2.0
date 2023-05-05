@@ -1,3 +1,5 @@
+Keeps PC awake, similar to Caffiene app.
+
 #Persistent
 
 SetTimer, Move,% 595000 	 ; approximately every 9.5 minutes
