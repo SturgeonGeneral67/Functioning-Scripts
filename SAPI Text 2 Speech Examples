@@ -1,0 +1,88 @@
+; ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  Example #1
+
+^G::
+
+SayString := "This is text."
+
+v := ComObjCreate("SAPI.SpVoice")
+
+v.rate := +2 		; Adjust speech speed.
+v.Speak(SayString) 		; announce String
+return
+
+RELOAD
+
+
+; ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶ ̶  ̶  ̶  ̶  
+; ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶ ̶  ̶  ̶  ̶  
+;
+; ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  Example #2
+
+ComObjCreate("SAPI.SpVoice").Speak("This is text.")
+
+
+; ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶ ̶  ̶  ̶  ̶  
+; ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶ ̶  ̶  ̶  ̶  
+; ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  Example #3
+
+^H::
+
+Text = This is text.
+SAPI := ComObjCreate("SAPI.SpVoice")
+SAPI.rate := +4.75 		; Adjust speech speed.
+Loop, Parse, Text 		; Speaks individual letters.
+	SAPI.speak(A_LoopField)
+Return
+
+
+; ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶ ̶  ̶  ̶  ̶  
+; ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶ ̶  ̶  ̶  ̶  
+; ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  Example # 4
+Global aVoice := ComObjCreate("SAPI.SpVoice"), voices := aVoice.GetVoices() ; Array of voices
+Global bVoice := ComObjCreate("SAPI.SpVoice"), voices := bVoice.GetVoices() ; Array of voices
+
+F1::  ; With Pitch added.
+
+bVoice.Speak("<Pitch AbsMiddle =""8"" />", 0x29) 	; Pitch section needs to come before the speech.
+
+speak2("Goodbye!", VoiceB := 2) 
+speak2(phrase, VoiceB := 2, rate := 0, pitch := 8, vol := 100) 
+{
+bVoice.Volume := vol
+bVoice.Rate := rate
+bVoice.Voice := voices.Item(VoiceB - 1)
+bVoice.WaitUntilDone(True)
+bVoice.Speak(phrase)
+}
+
+Return
+
+
+; ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶ ̶  ̶  ̶  ̶  
+; ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶ ̶  ̶  ̶  ̶  
+; ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  Example # 5
+Global aVoice := ComObjCreate("SAPI.SpVoice"), voices := aVoice.GetVoices() ; Array of voices
+Global bVoice := ComObjCreate("SAPI.SpVoice"), voices := bVoice.GetVoices() ; Array of voices
+
+F2::  		; With Female Pitch added.
+
+bVoice.Speak("<Pitch AbsMiddle =""8"" />", 0x29) 	; Pitch section needs to come before the speech.
+SoundSet +10
+speak1("Smooth Sailing Is Activated.", VoiceB := 1) 
+speak1(phrase, VoiceB := 1, rate := 0, pitch := 7, vol := 100) 
+{
+bVoice.Volume := vol
+bVoice.Rate := rate
+bVoice.Voice := voices.Item(VoiceB - 1)
+bVoice.WaitUntilDone(True)
+bVoice.Speak(phrase)
+}
+SoundSet -10
+Return
+
+;
+;
+; ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶ ̶  ̶  ̶  ̶  
+; ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶ ̶  ̶  ̶  ̶  
+^!R:: Reload
+^Esc::ExitApp
