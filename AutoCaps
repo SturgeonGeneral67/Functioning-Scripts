@@ -1,0 +1,41 @@
+; Capitalize every 1st letter following a period, question mark, or exclamation point with
+;  a single space between the punctuation mark and that letter without using the Shift key.
+; Also changes a lowercase "i" into an uppercase "I" when sitting alone.
+
+; Loops for setting up sentence initial caps.
+
+AutoCap:
+
+Loop, 26
+	Hotstring(":C?*:. " . Chr(A_Index + 96),". " . Chr(A_Index + 64))
+Loop, 26
+	Hotstring(":CR?*:! " . Chr(A_Index + 96),"! " . Chr(A_Index + 64))
+Loop, 26
+	Hotstring(":C?*:? " . Chr(A_Index + 96),"? " . Chr(A_Index + 64))
+Loop, 26
+	Hotstring(":C?*:`n" . Chr(A_Index + 96),"`n" . Chr(A_Index + 64))
+
+Return
+
+; Capitalize the word I.
+
+:C:i::I
+
+; Hotkey for instant cap of any word.
+
+CapsLock::
+  OldClipboard := ClipboardAll
+  Clipboard := ""     ; Clears the Clipboard
+  SendInput ^+{left}  ; Selects word to the left
+  Sleep, 100
+  SendInput ^c        ; Copy text
+  ClipWait 0 ;pause for Clipboard data
+  If ErrorLevel
+  {
+    MsgBox, No text selected!
+  }
+  StringUpper, Clipboard, Clipboard, T  ; Cap first char (Title)
+  Sleep, 100
+  SendInput %Clipboard%
+  Clipboard := OldClipboard
+Return
