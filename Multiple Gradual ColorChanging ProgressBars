@@ -1,0 +1,569 @@
+; 	Ctrl+ (1st letter of color name)
+; 	Green-Yellow-Red-Marine Blue-Pink-Teal-
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶ ̶  ̶  ̶  ̶  
+
+; ========  GREEN-READY/GO/START/LAUNCH/ACTIVE =etc.===========
+
+;=========================================
+^G::
+;=========================================
+; Source Link --->  https://www.autohotkey.com/boards/viewtopic.php?f=6&t=89019
+
+Gui 67:New
+;  ̶  ̶  ̶  ̶  ̶  Bar Start Color
+start_r := 1 ; red
+start_g := 1 ; green
+start_b := 1 ; blue
+
+;  ̶  ̶  ̶  ̶  ̶  Bar End Color
+end_r := 0 ; red
+end_g := 255 ; GREEN
+end_b := 0 ; blue
+
+;=========================================
+
+EndRBG := end_r end_g end_b
+
+Total_Files := 0 
+Cur_Step := 0 
+Prog_Loc := 0 
+
+Loop, Files, %A_WinDir%\*.*, D 
+{
+Total_Files++
+}
+
+math_r := (end_r - start_r) / Total_Files 
+math_g := (end_g - start_g) / Total_Files 
+math_b := (end_b - start_b) / Total_Files 
+
+prog_r := start_r + math_r 
+prog_g := start_g + math_g
+prog_b := start_b + math_b
+
+Gui 67: Color, 010101
+Gui 67: +LastFound +AlwaysOnTop -Caption
+WinSet, TransColor, 010101
+
+Gui 67: add, progress, w200 Background000000 vMyProgress, %Prog_Loc%
+
+Gui 67: Font, s10 Bold, Segoe UI
+Gui 67: add, text, x127 y25 w100 c00FF00 vPercentVar,
+Gui 67: Font, s10 Normal, Segoe UI
+Gui 67: add, text, x67 yp w100 c00FF00, Loading....
+
+Gui 67: show,
+
+Gui 67:Default
+
+loop,
+	{	
+	prog_r := prog_r + math_r 
+	prog_g := prog_g + math_g
+	prog_b := prog_b + math_b
+	CurRBG := Round(prog_r) Round(prog_g) Round(prog_b) 
+	hex := format("0x{1:02x}{2:02x}{3:02x}", prog_r, prog_g, prog_b) 
+
+	Prog_Loc := Cur_Step/Total_Files*103 
+	GuiControl, +c%hex%, MyProgress, 
+	GuiControl,, MyProgress, % Prog_Loc 
+	Cur_Step++ ; Counts the next step number.
+	sleep 12 ; Progress bar speed adjustment.
+
+		If (Prog_Loc = 100) or (CurRBG = EndRBG)
+		{
+		GuiControl,, PercentVar, 100 `% 
+		break
+		}
+	}
+Sleep 450
+Soundbeep 670
+Gui 67: Destroy
+Sleep 10
+
+Return
+
+; ==========  YELLOW-WAIT/PAUSE/SLOW/SUSPEND =etc.============
+
+;=========================================
+^Y::
+;=========================================
+; Source Link --->  https://www.autohotkey.com/boards/viewtopic.php?f=6&t=89019
+
+Gui 67:New
+;  ̶  ̶  ̶  ̶  ̶  Bar Start Color
+start_r := 1 ; red
+start_g := 1 ; green
+start_b := 1 ; blue
+
+;  ̶  ̶  ̶  ̶  ̶  Bar End Color
+end_r := 255 ; red
+end_g := 255 ; GREEN
+end_b := 0 ; blue
+
+;=========================================
+
+EndRBG := end_r end_g end_b
+
+Total_Files := 0 
+Cur_Step := 0 
+Prog_Loc := 0 
+
+Loop, Files, %A_WinDir%\*.*, D 
+{
+Total_Files++
+}
+
+math_r := (end_r - start_r) / Total_Files 
+math_g := (end_g - start_g) / Total_Files 
+math_b := (end_b - start_b) / Total_Files 
+
+prog_r := start_r + math_r 
+prog_g := start_g + math_g
+prog_b := start_b + math_b
+
+Gui 67: Color, 010101
+Gui 67: +LastFound +AlwaysOnTop -Caption
+WinSet, TransColor, 010101
+
+Gui 67: add, progress, w200 Background000000 vMyProgress, %Prog_Loc%
+
+Gui 67: Font, s10 Bold, Segoe UI
+Gui 67: add, text, x127 y25 w100 c00FF00 vPercentVar,
+Gui 67: Font, s10 Normal, Segoe UI
+Gui 67: add, text, x67 yp w100 c00FF00, Waiting....
+
+Gui 67: show,
+
+Gui 67:Default
+
+loop,
+	{	
+	prog_r := prog_r + math_r 
+	prog_g := prog_g + math_g
+	prog_b := prog_b + math_b
+	CurRBG := Round(prog_r) Round(prog_g) Round(prog_b) 
+	hex := format("0x{1:02x}{2:02x}{3:02x}", prog_r, prog_g, prog_b) 
+
+	Prog_Loc := Cur_Step/Total_Files*103 
+	GuiControl, +c%hex%, MyProgress, 
+	GuiControl,, MyProgress, % Prog_Loc 
+	Cur_Step++ ; Counts the next step number.
+	sleep 12 ; Progress bar speed adjustment.
+
+		If (Prog_Loc = 100) or (CurRBG = EndRBG)
+		{
+		GuiControl,, PercentVar, 100 `% 
+		break
+		}
+	}
+Sleep 450
+Soundbeep 670
+Gui 67: Destroy
+Sleep 10
+
+Return
+
+; =============  RED-END/STOP/EXIT/FINISH/CLOSE =etc.============
+
+;=========================================
+^R::
+;=========================================
+; Source Link --->  https://www.autohotkey.com/boards/viewtopic.php?f=6&t=89019
+
+Gui 68:New
+;  ̶  ̶  ̶  ̶  ̶  Bar Start Color
+start_r := 1 ; red
+start_g := 1 ; green
+start_b := 1 ; blue
+
+;  ̶  ̶  ̶  ̶  ̶  Bar End Color
+end_r := 255 ; RED
+end_g := 0 ; green
+end_b := 0 ; blue
+;=========================================
+
+EndRBG := end_r end_g end_b
+
+Total_Files := 0 
+Cur_Step := 0 
+Prog_Loc := 0 
+
+Loop, Files, %A_WinDir%\*.*, D 
+{
+Total_Files++
+}
+
+math_r := (end_r - start_r) / Total_Files 
+math_g := (end_g - start_g) / Total_Files 
+math_b := (end_b - start_b) / Total_Files 
+
+prog_r := start_r + math_r 
+prog_g := start_g + math_g
+prog_b := start_b + math_b
+
+
+Gui 68: Color, 010101
+Gui 68: +LastFound +AlwaysOnTop -Caption
+WinSet, TransColor, 010101
+
+Gui 68: add, progress, w200 H15 Background000000 vMyProgress, %Prog_Loc%
+
+Gui 68: Font, s10 Normal , Segoe UI
+Gui 68: add, text, x130 y25 w100 cRED vPercentVar,
+Gui 68: Font, s10 Normal, Segoe UI
+Gui 68: add, text, x93 yp w100 cRED, Exiting....
+
+Gui 68: show,
+
+Gui 68:Default
+
+loop,
+	{	
+	prog_r := prog_r + math_r 
+	prog_g := prog_g + math_g
+	prog_b := prog_b + math_b
+	CurRBG := Round(prog_r) Round(prog_g) Round(prog_b) 
+	hex := format("0x{1:02x}{2:02x}{3:02x}", prog_r, prog_g, prog_b) 
+
+	Prog_Loc := Cur_Step/Total_Files*103 
+	GuiControl, +c%hex%, MyProgress, 
+	GuiControl,, MyProgress, % Prog_Loc 
+	Cur_Step++ ; Counts the next step number.
+	sleep 17 ; Progress bar speed adjustment.
+
+		If (Prog_Loc = 100) or (CurRBG = EndRBG) 
+		{
+		GuiControl,, PercentVar, 100 `% 
+		break
+		}
+	}
+Gui 68: Destroy
+Soundbeep 670
+Sleep 10
+
+Return
+
+; =====  AquaMARINE-DETERMINE/YOUR/OWN/MEANING=etc.========
+
+;=========================================
+^M::
+;=========================================
+; Source Link --->  https://www.autohotkey.com/boards/viewtopic.php?f=6&t=89019
+
+Gui 67:New
+;  ̶  ̶  ̶  ̶  ̶  Bar Start Color	
+start_r := 1 ; red
+start_g := 1 ; green
+start_b := 1 ; blue
+
+;  ̶  ̶  ̶  ̶  ̶  Bar End Color
+end_r := 79 ; red
+end_g := 232 ; GREEN
+end_b := 230 ; blue
+
+;=========================================
+
+EndRBG := end_r end_g end_b
+
+Total_Files := 0 
+Cur_Step := 0 
+Prog_Loc := 0 
+
+Loop, Files, %A_WinDir%\*.*, D 
+{
+Total_Files++
+}
+
+math_r := (end_r - start_r) / Total_Files 
+math_g := (end_g - start_g) / Total_Files 
+math_b := (end_b - start_b) / Total_Files 
+
+prog_r := start_r + math_r 
+prog_g := start_g + math_g
+prog_b := start_b + math_b
+
+Gui 67: Color, 010101
+Gui 67: +LastFound +AlwaysOnTop -Caption
+WinSet, TransColor, 010101
+
+Gui 67: add, progress, w200 Background000000 vMyProgress, %Prog_Loc%
+
+Gui 67: Font, s10 Bold, Segoe UI
+Gui 67: add, text, x127 y25 w100 c00FF00 vPercentVar,
+Gui 67: Font, s10 Normal, Segoe UI
+Gui 67: add, text, x67 yp w100 c00FF00, Loading....
+
+Gui 67: show,
+
+Gui 67:Default
+
+loop,
+	{	
+	prog_r := prog_r + math_r 
+	prog_g := prog_g + math_g
+	prog_b := prog_b + math_b
+	CurRBG := Round(prog_r) Round(prog_g) Round(prog_b) 
+	hex := format("0x{1:02x}{2:02x}{3:02x}", prog_r, prog_g, prog_b) 
+
+	Prog_Loc := Cur_Step/Total_Files*103 
+	GuiControl, +c%hex%, MyProgress, 
+	GuiControl,, MyProgress, % Prog_Loc 
+	Cur_Step++ ; Counts the next step number.
+	sleep 12 ; Progress bar speed adjustment.
+
+		If (Prog_Loc = 100) or (CurRBG = EndRBG)
+		{
+		GuiControl,, PercentVar, 100 `% 
+		break
+		}
+	}
+Sleep 450
+Soundbeep 670
+Gui 67: Destroy
+Sleep 10
+
+Return
+
+; =============  BLUE-ATTENTION/INPUT NEEDED/ =etc.=============
+
+;=========================================
+^B::
+;=========================================
+; Source Link --->  https://www.autohotkey.com/boards/viewtopic.php?f=6&t=89019
+
+Gui 67:New
+;  ̶  ̶  ̶  ̶  ̶  Bar Start Color	
+start_r := 1 ; red
+start_g := 1 ; green
+start_b := 1 ; blue
+
+;  ̶  ̶  ̶  ̶  ̶  Bar End Color
+end_r := 0 ; red
+end_g := 0 ; GREEN
+end_b := 255 ; blue
+
+;=========================================
+
+EndRBG := end_r end_g end_b
+
+Total_Files := 0 
+Cur_Step := 0 
+Prog_Loc := 0 
+
+Loop, Files, %A_WinDir%\*.*, D 
+{
+Total_Files++
+}
+
+math_r := (end_r - start_r) / Total_Files 
+math_g := (end_g - start_g) / Total_Files 
+math_b := (end_b - start_b) / Total_Files 
+
+prog_r := start_r + math_r 
+prog_g := start_g + math_g
+prog_b := start_b + math_b
+
+Gui 67: Color, 010101
+Gui 67: +LastFound +AlwaysOnTop -Caption
+WinSet, TransColor, 010101
+
+Gui 67: add, progress, w200 Background000000 vMyProgress, %Prog_Loc%
+
+Gui 67: Font, s10 Bold, Segoe UI
+Gui 67: add, text, x127 y25 w100 c00FF00 vPercentVar,
+Gui 67: Font, s10 Normal, Segoe UI
+Gui 67: add, text, x67 yp w100 c00FF00, Loading....
+
+Gui 67: show,
+
+Gui 67:Default
+
+loop,
+	{	
+	prog_r := prog_r + math_r 
+	prog_g := prog_g + math_g
+	prog_b := prog_b + math_b
+	CurRBG := Round(prog_r) Round(prog_g) Round(prog_b) 
+	hex := format("0x{1:02x}{2:02x}{3:02x}", prog_r, prog_g, prog_b) 
+
+	Prog_Loc := Cur_Step/Total_Files*103 
+	GuiControl, +c%hex%, MyProgress, 
+	GuiControl,, MyProgress, % Prog_Loc 
+	Cur_Step++ ; Counts the next step number.
+	sleep 12 ; Progress bar speed adjustment.
+
+		If (Prog_Loc = 100) or (CurRBG = EndRBG)
+		{
+		GuiControl,, PercentVar, 100 `% 
+		break
+		}
+	}
+Sleep 450
+Soundbeep 670
+Gui 67: Destroy
+Sleep 10
+
+Return
+
+; =========  PINK-DETERMINE/YOUR/OWN/MEANING=etc.===========
+
+;=========================================
+^P::
+;=========================================
+; Source Link --->  https://www.autohotkey.com/boards/viewtopic.php?f=6&t=89019
+
+Gui 67:New
+;  ̶  ̶  ̶  ̶  ̶  Bar Start Color	
+start_r := 1 ; red
+start_g := 1 ; green
+start_b := 1 ; blue
+
+;  ̶  ̶  ̶  ̶  ̶  Bar End Color
+end_r := 232 ; red
+end_g := 134 ; GREEN
+end_b := 234 ; blue
+
+;=========================================
+
+EndRBG := end_r end_g end_b
+
+Total_Files := 0 
+Cur_Step := 0 
+Prog_Loc := 0 
+
+Loop, Files, %A_WinDir%\*.*, D 
+{
+Total_Files++
+}
+
+math_r := (end_r - start_r) / Total_Files 
+math_g := (end_g - start_g) / Total_Files 
+math_b := (end_b - start_b) / Total_Files 
+
+prog_r := start_r + math_r 
+prog_g := start_g + math_g
+prog_b := start_b + math_b
+
+Gui 67: Color, 010101
+Gui 67: +LastFound +AlwaysOnTop -Caption
+WinSet, TransColor, 010101
+
+Gui 67: add, progress, w200 Background000000 vMyProgress, %Prog_Loc%
+
+Gui 67: Font, s10 Bold, Segoe UI
+Gui 67: add, text, x127 y25 w100 c00FF00 vPercentVar,
+Gui 67: Font, s10 Normal, Segoe UI
+Gui 67: add, text, x67 yp w100 c00FF00, Loading....
+
+Gui 67: show,
+
+Gui 67:Default
+
+loop,
+	{	
+	prog_r := prog_r + math_r 
+	prog_g := prog_g + math_g
+	prog_b := prog_b + math_b
+	CurRBG := Round(prog_r) Round(prog_g) Round(prog_b) 
+	hex := format("0x{1:02x}{2:02x}{3:02x}", prog_r, prog_g, prog_b) 
+
+	Prog_Loc := Cur_Step/Total_Files*103 
+	GuiControl, +c%hex%, MyProgress, 
+	GuiControl,, MyProgress, % Prog_Loc 
+	Cur_Step++ ; Counts the next step number.
+	sleep 12 ; Progress bar speed adjustment.
+
+		If (Prog_Loc = 100) or (CurRBG = EndRBG)
+		{
+		GuiControl,, PercentVar, 100 `% 
+		break
+		}
+	}
+Sleep 450
+Soundbeep 670
+Gui 67: Destroy
+Sleep 10
+
+Return
+
+; ==========  TEAL-DETERMINE/YOUR/OWN/MEANING=etc.===========
+
+;=========================================
+^T::
+;=========================================
+; Source Link --->  https://www.autohotkey.com/boards/viewtopic.php?f=6&t=89019
+
+Gui 67:New
+;  ̶  ̶  ̶  ̶  ̶  Bar Start Color	
+start_r := 1 ; red
+start_g := 1 ; green
+start_b := 1 ; blue
+
+;  ̶  ̶  ̶  ̶  ̶  Bar End Color
+end_r := 0 ; red
+end_g := 124 ; GREEN
+end_b := 124 ; blue
+
+;=========================================
+
+EndRBG := end_r end_g end_b
+
+Total_Files := 0 
+Cur_Step := 0 
+Prog_Loc := 0 
+
+Loop, Files, %A_WinDir%\*.*, D 
+{
+Total_Files++
+}
+
+math_r := (end_r - start_r) / Total_Files 
+math_g := (end_g - start_g) / Total_Files 
+math_b := (end_b - start_b) / Total_Files 
+
+prog_r := start_r + math_r 
+prog_g := start_g + math_g
+prog_b := start_b + math_b
+
+Gui 67: Color, 010101
+Gui 67: +LastFound +AlwaysOnTop -Caption
+WinSet, TransColor, 010101
+
+Gui 67: add, progress, w200 Background000000 vMyProgress, %Prog_Loc%
+
+Gui 67: Font, s10 Bold, Segoe UI
+Gui 67: add, text, x127 y25 w100 c00FF00 vPercentVar,
+Gui 67: Font, s10 Normal, Segoe UI
+Gui 67: add, text, x67 yp w100 c00FF00, Loading....
+
+Gui 67: show,
+
+Gui 67:Default
+
+loop,
+	{	
+	prog_r := prog_r + math_r 
+	prog_g := prog_g + math_g
+	prog_b := prog_b + math_b
+	CurRBG := Round(prog_r) Round(prog_g) Round(prog_b) 
+	hex := format("0x{1:02x}{2:02x}{3:02x}", prog_r, prog_g, prog_b) 
+
+	Prog_Loc := Cur_Step/Total_Files*103 
+	GuiControl, +c%hex%, MyProgress, 
+	GuiControl,, MyProgress, % Prog_Loc 
+	Cur_Step++ ; Counts the next step number.
+	sleep 12 ; Progress bar speed adjustment.
+
+		If (Prog_Loc = 100) or (CurRBG = EndRBG)
+		{
+		GuiControl,, PercentVar, 100 `% 
+		break
+		}
+	}
+Sleep 450
+Soundbeep 670
+Gui 67: Destroy
+Sleep 10
+
+Return
