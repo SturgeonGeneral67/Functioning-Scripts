@@ -1,0 +1,10 @@
+;			Defaulted to Always ON.
+SetNumLockState, AlwaysOn
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  
+; (LCtrl+L)
+<^L::
+SetNumLockState, AlwaysOn
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶   
+; (RCtrl+L)
+>^L::
+SetNumLockState, Off
