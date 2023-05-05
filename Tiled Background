@@ -1,10 +1,13 @@
 ^T::
 
-; IfNotExist,tile.bmp,UrlDownloadToFile,http://www.maestrith.com/files/tile.bmp,tile.bmp
-; IfNotExist,lens.png,UrlDownloadToFile,http://i.imgur.com/pGL6k.png,lens.png
-;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶   These will download original image samples from maestrith's post...
-;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶   Or use the included testing samples included. Must remain in same location as script.
-;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶ ̶  ̶  ̶  ̶  
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶   Use the included testing samples. Must remain in same location/folder as script. 
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶   Images included in main directory. Unsure how to attach them to with github.
+
+; - Imgages Needed:
+; - PRISMed.bmp  = Needed for background tiling.
+; - BAT.png      = Sample image - example.
+; - BATblack.png = Sample image shadow - example
+
 
 Gui,
 +Resize 		 ; Makes the window resizable and enables its maximize button in the title bar.
