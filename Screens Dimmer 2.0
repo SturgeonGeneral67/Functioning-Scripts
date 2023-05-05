@@ -1,0 +1,58 @@
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶ ̶  ̶  ̶  ̶  
+*/
+
+(Ctrl+ALT+D) 	 Toggles monitor dimming on/off.
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  
+^WheelUp  	 Ctrl WheelUp  Dimming increase
+^UP		 Ctrl + UP arrow
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  
+^WheelDown 	 Ctrl WheelDown  Dimming decrease
+^DOWN 		 Ctrl + DOWN arrow
+
+*/
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶ ̶  ̶  ̶  ̶  
+
+^!D:: 				;  (Ctrl+ALT+D) Toggles monitor dimming on/off.
+
+IF G1 				;Dim with Cursor in the monitor & (WheelUp or WheelDown)
+    Reload
+InitialDimming := [15,15,15,15] 	;(0-255) Initial dimming of up to 4 monitors
+SysGet, Mo, 80 			;number of monitors
+Loop,% Mo
+{
+    SysGet, Mo, Monitor, %A_Index%
+    Width := (%A_Index%R := MoRight) - (%A_Index%L := MoLeft)
+    Height := (%A_Index%B := MoBottom) - (%A_Index%T := MoTop)
+    Gui, DG%A_Index%:New, +ToolWindow -Disabled -SysMenu -Caption 
+		-DPIScale +E0x20 +AlwaysOnTop +HwndG%A_Index%
+; MsgBox,% A_DefaultGui 		;name of the current thread's default GUI
+	Gui, Color, Black
+    Gui, Show, W%Width% H%Height% X%MoLeft% Y%MoTop%
+	WinSet, Transparent,% InitialDimming[A_Index],% G%A_Index%:="ahk_id " G%A_Index%
+}
+Return
+
+	^WheelUp:: 		; Ctrl+Shift WheelUp  Dimming increase
+	^UP::
+
+	^WheelDown:: 		; Ctrl+Shift WheelDown  Dimming decrease
+	^DOWN::
+
+CoordMode, Mouse, Screen
+MouseGetPos, X, Y
+Loop,% Mo
+	Win := G%A_Index%
+Until, (X >= %A_Index%L) And (X < %A_Index%R) 
+	And (Y < %A_Index%B) And (Y >= %A_Index%T)
+WinGet, Trans, Transparent,% Win
+IF InStr(A_ThisHotkey, "Up")
+	WinSet, Transparent,% Min(255, Trans + 16),% Win
+Else
+	WinSet, Transparent,% Max(0, Trans - 16),% Win
+Return
+
+;
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶   
+^!R:: Reload
+^Esc::ExitApp
+;  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶  ̶   
