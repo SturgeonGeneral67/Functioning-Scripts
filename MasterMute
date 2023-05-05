@@ -1,0 +1,5 @@
+Toggle PC sound mute off/on.
+
+*^!Space::
+SoundSet, +1,, Mute
+return
